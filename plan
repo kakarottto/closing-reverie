@@ -1,0 +1,11 @@
+make a simple game loop with putpixels in it;
+read png/jpg files;
+read small portion of a bigger image file and update the portion loc on event;
+----
+make a world map with a character moving on it. make the update on a grid movement;
+determine the color of the headed place(by the character) and determine if can go there, example:
+blue color - water - need a boat, green color - grass - walk, brown color - mountain - need an airship;
+on fight case - change the onevent, onddraw and onupdate funcs. when end, go back;
+go to villages, caves, etc;
+add boat and airship;
+
