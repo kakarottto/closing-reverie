@@ -124,7 +124,7 @@ bool World_Character::can_go_trough(SDL_Color color_down,SDL_Color color_up){
 				" "  <<(int)color_down.b<<std::endl;
 	*/
 	SDL_Color water = {0,0,0,0};
-	SDL_Color mountain_down = {82, 57, 32};
+	SDL_Color mountain_down = {82, 57, aa32};
 	SDL_Color mountain_mid = {164,139,74};
 	SDL_Color mountain_up = {250, 225, 150};
 	//grass: 106, 206, 57 ;
@@ -135,12 +135,15 @@ bool World_Character::can_go_trough(SDL_Color color_down,SDL_Color color_up){
 	//222, 205, 106
 	//246, 222, 139
 	//80<=246<=250, 50<180<225, 30<139<150
+	//todo: add one more color that is the upper right corner of the surrounding of you
+	//if the mountain collision is correct but the corner is different, then pass it
+	//the bridge must be crossable
 	std::cout<<(int)mountain_down.r<<" "<<(int)color_down.r<<" "<<(int)mountain_up.r<<"\n"
 	<<(int)mountain_down.g<<" "<<(int)color_down.g<<" "<<(int)mountain_up.g<<"\n"
 	<<(int)mountain_down.b<<" "<<(int)color_down.b<<" "<<(int)mountain_up.b<<"\n\n";
 	if(inmap_privilage == 0){
 		if(compare_color(color_down,water) || compare_color(color_up,water) ) return false;
-		if( color_between(mountain_down,color_down,mountain_mid) &&
+		if( color_between(mountain_down,color_down,mountain_mid) ||
 			color_between(mountain_mid,color_down,mountain_up)) return false;
 		
 	}
