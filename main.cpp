@@ -1,19 +1,77 @@
 #include "image.h"
 #include "env.h"
+#include "world_character.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 
 Enviroment app;
 Image map;
+World_Character mc;
 SDL_Event event;
 bool butt=1;
-int block = 30;
+int block = 10;
+
 
 
 void example_draw(){
 	SDL_RenderClear(app.getRenderer());
-	//app.put_pixel(100,100,{255,255,255,255},app.getRenderer());
 	if(butt) map.render_image(app.getRenderer());
+	mc.render_image(app.getRenderer());
+
+
+	/*
+	left
+	app.put_pixel(
+			(app.getScreenWidth()-4*block)/2,
+			(app.getScreenHeight()+block+4*mc.getCharHeight()/3)/2,
+			SDL_Color{255,0,255,255}
+			);
+	
+	app.put_pixel(
+			(app.getScreenWidth()-4*block)/2,
+			(app.getScreenHeight()+mc.getCharHeight())/2,
+			SDL_Color{255,0,255,255}
+			);
+	
+	right
+	app.put_pixel(
+			(app.getScreenWidth()+2*mc.getCharWidth()+4*block)/2,
+			(app.getScreenHeight()+block+4*mc.getCharHeight()/3)/2,
+			SDL_Color{255,0,255,255}
+			);
+	
+	app.put_pixel(
+			(app.getScreenWidth()+2*mc.getCharWidth()+4*block)/2,
+			(app.getScreenHeight()+mc.getCharHeight())/2,
+			SDL_Color{255,0,255,255}
+			);
+
+	up
+	app.put_pixel(
+			(app.getScreenWidth()-block+4*mc.getCharWidth()/3)/2,
+			(app.getScreenHeight()-2*block)/2,
+			SDL_Color{255,0,255,255}
+			);
+		
+	app.put_pixel(
+			(app.getScreenWidth()-block+mc.getCharWidth())/2,
+			(app.getScreenHeight()-2*block)/2,
+			SDL_Color{255,0,255,255}
+			);	
+	
+	down
+	app.put_pixel(
+			(app.getScreenWidth()-block+mc.getCharWidth())/2,
+			(app.getScreenHeight()+2*mc.getCharHeight()+2*block)/2,
+			SDL_Color{255,0,255,255}
+			);
+
+	app.put_pixel(
+			(app.getScreenWidth()-block+4*mc.getCharWidth()/3)/2,
+			(app.getScreenHeight()+2*mc.getCharHeight()+2*block)/2,
+			SDL_Color{255,0,255,255}
+			);
+	*/
 	SDL_RenderPresent(app.getRenderer());
 }
 
@@ -29,16 +87,74 @@ void example_update(){
 		if(event.type == SDL_KEYDOWN){	
 			
 			if(event.key.keysym.scancode == SDL_SCANCODE_A){
-				map.updateTextureRect({-block,0,0,0});
+				//tora-uma experience
+				
+				if(mc.can_go_trough( 
+					app.get_pixel(
+						(app.getScreenWidth()-4*block)/2,
+						(app.getScreenHeight()+mc.getCharHeight())/2
+					),
+					app.get_pixel(
+						(app.getScreenWidth()-4*block)/2,
+						(app.getScreenHeight()+block+4*mc.getCharHeight()/3)/2
+					)
+			
+				))
+				{
+				map.updateTextureRect({-block,0,0,0});	
+				}
+				mc.default_set(0);
 			}
-			else if(event.key.keysym.scancode == SDL_SCANCODE_D){
-				map.updateTextureRect({block,0,0,0});
+			if(event.key.keysym.scancode == SDL_SCANCODE_D){
+				
+				if(mc.can_go_trough(
+					app.get_pixel(
+						(app.getScreenWidth()+2*mc.getCharWidth()+4*block)/2,
+						(app.getScreenHeight()+block+4*mc.getCharHeight()/3)/2
+					),
+					app.get_pixel(		
+						(app.getScreenWidth()+2*mc.getCharWidth()+4*block)/2,
+						(app.getScreenHeight()+mc.getCharHeight())/2
+					)
+				))
+				{
+					map.updateTextureRect({block,0,0,0});	
+				}
+				
+				mc.default_set(1);
+				
 			}
 			if(event.key.keysym.scancode == SDL_SCANCODE_W){
-				map.updateTextureRect({0,-block,0,0});
+				if(mc.can_go_trough( 
+					app.get_pixel(
+						(app.getScreenWidth()-block+4*mc.getCharWidth()/3)/2,
+						(app.getScreenHeight()-2*block)/2
+					),
+					app.get_pixel(
+						(app.getScreenWidth()-block+mc.getCharWidth())/2,
+						(app.getScreenHeight()-2*block)/2
+					)
+				))
+				{
+					map.updateTextureRect({0,-block,0,0});	
+				}
+				mc.default_set(2);
 			}
-			else if(event.key.keysym.scancode == SDL_SCANCODE_S){
-				map.updateTextureRect({0,block,0,0});	
+			if(event.key.keysym.scancode == SDL_SCANCODE_S){
+				if(mc.can_go_trough( 
+					app.get_pixel(
+						(app.getScreenWidth()-block+mc.getCharWidth())/2,
+						(app.getScreenHeight()+2*mc.getCharHeight()+2*block)/2
+					),
+					app.get_pixel(
+						(app.getScreenWidth()-block+4*mc.getCharWidth()/3)/2,
+						(app.getScreenHeight()+2*mc.getCharHeight()+2*block)/2
+					)
+				))
+				{
+					map.updateTextureRect({0,block,0,0});	
+				}
+				mc.default_set(3);
 			}
 			
 			if(event.key.keysym.scancode == SDL_SCANCODE_R){
@@ -67,7 +183,12 @@ void example_update(){
 
 void example_init(){	
 	map.load_image("./map1.png",app.getRenderer());
-	map.set_rects({0,0,app.getScreenHeight(),app.getScreenWidth()},{600,600,360,420});
+	map.set_rects({0,0,app.getScreenWidth(),app.getScreenHeight()},{520,600,360,420});
+	mc.setType(5);
+	mc.setSide(1);
+	mc.setSprite("./ff_char_world.png",app.getRenderer());
+	mc.setLocation(app.getScreenWidth()/2,app.getScreenHeight()/2);
+	mc.set_rects();
 }
 
 

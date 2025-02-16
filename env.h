@@ -21,8 +21,8 @@ public:
 	void Stop();
 	void halt();
 	void pause(void (*drawf)());
-	void put_pixel(int x, int y, SDL_Color c, SDL_Renderer* renderer);
-	SDL_Color get_pixel(int x, int y, SDL_Renderer* renderer);
+	void put_pixel(int x, int y, SDL_Color c);
+	SDL_Color get_pixel(int x, int y);
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
@@ -33,3 +33,28 @@ private:
 	void (*init)();
 	bool run;
 };
+
+static bool color_compare(SDL_Color a, SDL_Color b){
+	return (a.r == b.r && a.g == b.g && a.b == b.b );
+}
+static bool compare_color(SDL_Color b, SDL_Color a){
+	return color_compare(b,a);//to scare the ocd mortals
+}
+
+static bool color_less(SDL_Color a, SDL_Color b){
+	return (a.r <= b.r && a.g <= b.g && a.b <= b.b );
+}
+
+static bool less_color(SDL_Color a, SDL_Color b){
+	return color_less(a,b);
+}
+
+static bool color_between(SDL_Color a, SDL_Color b, SDL_Color c){
+	return ( (a.r <= b.r && b.r<=c.r) &&
+			 (a.g <= b.g && b.g<=c.g) &&
+			 (a.b <= b.b && b.b<=c.b));
+}
+
+static bool between_color(SDL_Color a, SDL_Color b, SDL_Color c){
+	return color_between(a,b,c);
+}

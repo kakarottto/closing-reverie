@@ -46,6 +46,14 @@ SDL_Rect Image::getTextureRect(){
 	return texture_rect;
 }
 
+SDL_Rect* Image::getpTextureRect(){
+	return &texture_rect;
+}
+
+SDL_Texture* Image::getTexture(){
+	return texture;
+}
+
 void Image::updateTextureRect(SDL_Rect rect){
 	//todo: think it trough correctly and move out this update functions
 	texture_rect.x = ((texture_rect.x+rect.x)< 0 ? texture_height+rect.x : (texture_rect.x+rect.x)%(image_rect.x+texture_height));
@@ -60,6 +68,10 @@ void Image::setImageRect(SDL_Rect rect){
 
 SDL_Rect Image::getImageRect(){
 	return image_rect;
+}
+
+SDL_Rect* Image::getpImageRect(){
+	return &image_rect;
 }
 
 void Image::updateImageRect(SDL_Rect rect){

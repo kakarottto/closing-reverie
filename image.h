@@ -10,11 +10,14 @@ public:
 	void set_rects(SDL_Rect onscreen, SDL_Rect portion);
 	void setTextureRect(SDL_Rect rect);
 	SDL_Rect getTextureRect();
+	SDL_Rect* getpTextureRect();
 	void updateTextureRect(SDL_Rect rect);
 	void setImageRect(SDL_Rect rect);
 	SDL_Rect getImageRect();
+	SDL_Rect* getpImageRect();
 	void getTextureWidth();
 	void getTextureHeight();
+	SDL_Texture* getTexture();
 	void updateImageRect(SDL_Rect rect);
 private:
 	SDL_Texture* texture;

@@ -9,11 +9,11 @@ Enviroment::Enviroment(){
 		exit(-1);
 	}
 	
-	screen_height = 1024;
-	screen_width  = 720;
+	screen_height = 720;
+	screen_width  = 1024;
 	
 	window = SDL_CreateWindow("Closing Reverie", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,
-					 screen_height, screen_width, 0);
+					 screen_width, screen_height, 0);
 	if(window == nullptr){
 		std::cout << "SDL_CreateWindow Error:" << SDL_GetError()<<std::endl;
 		exit(-1);
@@ -99,7 +99,7 @@ void Enviroment::pause(void (*drawf)()){
 	halt();
 }
 
-void Enviroment::put_pixel(int x, int y, SDL_Color c, SDL_Renderer* renderer){
+void Enviroment::put_pixel(int x, int y, SDL_Color c){
 	SDL_Color old_color;
 	SDL_GetRenderDrawColor(renderer,&old_color.r,&old_color.g,&old_color.b,&old_color.a);
 	SDL_SetRenderDrawColor(renderer, c.r,c.g,c.b,c.a);
@@ -108,7 +108,7 @@ void Enviroment::put_pixel(int x, int y, SDL_Color c, SDL_Renderer* renderer){
 }
 
 
-SDL_Color Enviroment::get_pixel(int x, int y, SDL_Renderer* renderer){
+SDL_Color Enviroment::get_pixel(int x, int y){
 	Uint32 color;
 	SDL_Color outp;
 	unsigned char r,g,b,a;
@@ -118,4 +118,5 @@ SDL_Color Enviroment::get_pixel(int x, int y, SDL_Renderer* renderer){
 	outp = {r,g,b,a};
 	return outp;
 }
+
 
