@@ -1,6 +1,8 @@
 #pragma once
 #include "image.h"
 #include <string>
+#include <vector>
+#include <SDL2/SDL.h>
 
 class World_Character{
 public:
@@ -17,7 +19,7 @@ public:
 	bool render_image( SDL_Renderer* renderer);
 	void set_rects();
 	void set_rects(SDL_Rect onscreen, SDL_Rect portion);
-	bool can_go_trough(SDL_Color color_down,SDL_Color color_up);
+	bool can_go_trough(SDL_Point point,SDL_Color color_down,SDL_Color color_up);
 	void default_set(int pos);
 	void do_flip();
 	void setFlip(bool flip);
@@ -29,8 +31,10 @@ public:
 	int getSide();
 	int getCharWidth();
 	int getCharHeight();
+
 	
 private:
+
 	Image img;
 	std::string image_path;
 	int locx, locy;

@@ -114,8 +114,7 @@ void World_Character::setInmap_privilage(int priv){
 	inmap_privilage = priv;
 }
 
-bool World_Character::can_go_trough(SDL_Color color_down,SDL_Color color_up){
-	//can add a function to determine a "secret passage" by defining special locations on the map
+bool World_Character::can_go_trough(SDL_Point point, SDL_Color color_down,SDL_Color color_up){
 	//detects the color and determines if can go to this place
 	
 	/*std::cout<<"top "<<(int)color_up.r<<" "<<(int)color_up.g<<
@@ -123,6 +122,12 @@ bool World_Character::can_go_trough(SDL_Color color_down,SDL_Color color_up){
 	std::cout<<"bot "<<(int)color_down.r<<" "<<(int)color_down.g<<
 				" "  <<(int)color_down.b<<std::endl;
 	*/
+	
+	//430 390
+	std::cout<<"\nloc:" << point.x<<" "<<point.y<<std::endl;
+	//passage check. todo: add an array of passages and check if its one of them
+	if(point.x <= 450 && point.x>=410 && point.y == 390) return true;
+	if(point.x <= 290 && point.x>=260 && point.y == 350) return true;
 	SDL_Color water = {0,0,0,0};
 	SDL_Color mountain_down = {82, 57, 32};
 	SDL_Color mountain_mid = {164,139,74};
@@ -143,8 +148,10 @@ bool World_Character::can_go_trough(SDL_Color color_down,SDL_Color color_up){
 	<<(int)mountain_down.b<<" "<<(int)color_down.b<<" "<<(int)mountain_up.b<<"\n\n";
 	if(inmap_privilage == 0){
 		if(compare_color(color_down,water) || compare_color(color_up,water) ) return false;
-		if( color_between(mountain_down,color_down,mountain_mid) ||
-			color_between(mountain_mid,color_down,mountain_up)) return false;
+		if( (color_between(mountain_down,color_down,mountain_mid) ||
+		 	color_between(mountain_mid,color_down,mountain_up)) ||
+		 	(color_between(mountain_down,color_up,mountain_mid) ||
+		 	color_between(mountain_mid,color_up,mountain_up)) ) return false;
 		
 	}
 	

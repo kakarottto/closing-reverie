@@ -31,7 +31,10 @@ private:
 	void (*update)();
 	void (*draw)();
 	void (*init)();
-	bool run;
+	bool run;	
+	int frame_delay = 1000/60;//60fps
+	Uint32 frameStart;
+	int frameTime;
 };
 
 static bool color_compare(SDL_Color a, SDL_Color b){

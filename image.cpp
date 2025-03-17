@@ -22,7 +22,7 @@ void Image::load_image(std::string file, SDL_Renderer* renderer){
 		texture = SDL_CreateTextureFromSurface(renderer, surface);
 		SDL_FreeSurface(surface);
 		SDL_QueryTexture(texture, NULL, NULL, &texture_width, &texture_height);
-		std::printf("%i x %i", texture_width, texture_height);
+		std::printf("%i x %i \n", texture_width, texture_height);
 	}
 }
 
@@ -68,6 +68,14 @@ void Image::setImageRect(SDL_Rect rect){
 
 SDL_Rect Image::getImageRect(){
 	return image_rect;
+}
+
+int Image::getTextureWidth(){
+	return texture_width;
+}
+
+int Image::getTextureHeight(){
+	return texture_height;
 }
 
 SDL_Rect* Image::getpImageRect(){

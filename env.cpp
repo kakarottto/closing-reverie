@@ -78,9 +78,15 @@ void Enviroment::setInit(void (*f)()){
 void Enviroment::Start(){
 	run = 1;
 	init();
+	
 	while(run){
+		frameStart = SDL_GetTicks();
 		update();
 		draw();
+		frameTime = SDL_GetTicks() - frameStart;
+        	if (frameTime < frame_delay) {
+        	    SDL_Delay(frame_delay - frameTime);
+        	}
 	}
 }
 

@@ -15,8 +15,8 @@ public:
 	void setImageRect(SDL_Rect rect);
 	SDL_Rect getImageRect();
 	SDL_Rect* getpImageRect();
-	void getTextureWidth();
-	void getTextureHeight();
+	int getTextureWidth();
+	int getTextureHeight();
 	SDL_Texture* getTexture();
 	void updateImageRect(SDL_Rect rect);
 private:
